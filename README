@@ -1,0 +1,26 @@
+In TileCache/Layers/UTMGrid.py, you will find a TileCache layer class that does
+nothing but draw UTM-based grids on transparent tiles, suitable for layering
+with other maps.
+
+example-8-76-114.png is an example output tile, and can be overlaid on the
+corresponding http://tile.openstreetmap.org/8/76/114.png.
+
+Example configuration, see also tilecache.cfg:
+
+    [utm]
+    
+    # the UTMGrid class
+    type=UTMGrid
+    
+    # label style, can be UTM or MGRS
+    display=UTM
+    
+    # minimum space between grid lines, in pixels.
+    spacing=128
+    
+    # length of 1/10 tick marks in pixels.
+    tick=8
+    
+    # Yes.
+    spherical_mercator=True
+    tms_type=google
