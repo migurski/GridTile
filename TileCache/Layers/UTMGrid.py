@@ -1,6 +1,7 @@
 import pyproj
 import PIL.Image
 import PIL.ImageDraw
+import PIL.ImageFont
 from math import log, pow, hypot, ceil
 from StringIO import StringIO
 from TileCache.Layer import MetaLayer
@@ -124,6 +125,7 @@ class UTMGrid(MetaLayer):
         # start doing things in pixels
         img = PIL.Image.new('RGBA', tile.size(), (0xEE, 0xEE, 0xEE, 0x00))
         draw = PIL.ImageDraw.ImageDraw(img)
+        font = PIL.ImageFont.truetype('DejaVuSansMono.ttf', 14)
         xform = transform(tile)
         
         lines = []
@@ -171,7 +173,9 @@ class UTMGrid(MetaLayer):
 
         # do the drawing bits
         for ((x, y), text) in labels:
-            draw.rectangle((x, y-12, x + len(text) * 7, y-2), fill=(0xFF, 0xFF, 0xFF))
+            x, y = x + 2, y - 18
+            w, h = font.getsize(text)
+            draw.rectangle((x - 2, y, x + w + 2, y + h), fill=(0xFF, 0xFF, 0xFF, 0x99))
 
         for line in lines:
             draw.line(line, fill=(0xFF, 0xFF, 0xFF))
@@ -180,7 +184,8 @@ class UTMGrid(MetaLayer):
             draw.line([(x-1, y-1) for (x, y) in line], fill=(0x00, 0x00, 0x00))
 
         for ((x, y), text) in labels:
-            draw.text((x+5, y-12), text, fill=(0x00, 0x00, 0x00))
+            x, y = x + 2, y - 18
+            draw.text((x, y), text, fill=(0x00, 0x00, 0x00), font=font)
 
         # up and on out
         buffer = StringIO()
