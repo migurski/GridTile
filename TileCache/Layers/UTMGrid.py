@@ -59,7 +59,7 @@ def utm2mgrs(e, n, grid, zeros=0):
     easting = '%05d' % (e % 100000)
     northing = '%05d' % (n % 100000)
     
-    return ''.join( [grid, square, easting[:-zeros], northing[:-zeros]] )
+    return ' '.join( [grid, square, easting[:-zeros], northing[:-zeros]] )
 
 def transform(tile):
     """
